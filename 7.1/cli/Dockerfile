@@ -17,9 +17,9 @@ RUN set -xe \
     && apk add --update \
         ${PHPIZE_DEPS} \
         postgresql-dev \
-    && pecl install apcu \
+    && pecl install xdebug apcu \
     && docker-php-ext-install pdo pdo_pgsql opcache zip \
-    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu \
+    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu xdebug \
     && apk del \
         postgresql-libs \
         libsasl \
