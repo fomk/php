@@ -17,6 +17,7 @@ RUN set -xe \
     && apk add --update \
         ${PHPIZE_DEPS} \
         postgresql-dev \
+        zlib-dev \
     && pecl install apcu \
     && docker-php-ext-install pdo pdo_pgsql opcache zip \
     && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu \
