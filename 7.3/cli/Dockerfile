@@ -1,4 +1,4 @@
-FROM php:5.6-fpm-alpine
+FROM php:7.3-cli-alpine
 
 ENV TZ Europe/Riga
 
@@ -17,14 +17,17 @@ RUN set -xe \
     && apk add --update \
         ${PHPIZE_DEPS} \
         postgresql-dev \
-        zlib-dev \
-    && pecl install xdebug-2.5.5 apcu-4.0.11 \
+        zlib-dev \ 
+        libzip-dev \
+    && pecl install xdebug apcu \
     && docker-php-ext-install pdo pdo_pgsql opcache zip \
     && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu xdebug \
     && apk del \
         postgresql-libs \
         libsasl \
         db \
+        zlib-dev \
+        libzip-dev \
         ${PHPIZE_DEPS}
 
 RUN set -xe \
@@ -34,9 +37,4 @@ RUN set -xe \
     && echo "date.timezone=${TZ}" > /usr/local/etc/php/conf.d/timezone.ini \
     && apk del tzdata
 
-
-WORKDIR /var/www/html
-
-EXPOSE 9000
-
-CMD ["php-fpm"]
+CMD ["php", "-a"]
