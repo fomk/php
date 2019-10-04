@@ -17,16 +17,16 @@ RUN set -xe \
     && apk add --update \
         ${PHPIZE_DEPS} \
         postgresql-dev \
-        zlib-dev \ 
         libzip-dev \
+        libzip \
     && pecl install apcu \
+    && docker-php-ext-configure zip --with-libzip=/usr/include \
     && docker-php-ext-install pdo pdo_pgsql opcache zip \
     && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu \
     && apk del \
         postgresql-libs \
         libsasl \
         db \
-        zlib-dev \
         libzip-dev \
         ${PHPIZE_DEPS}
 

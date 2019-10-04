@@ -19,7 +19,9 @@ RUN set -xe \
         postgresql-dev \
         zlib-dev \
         libzip-dev \
+        libzip \
     && pecl install apcu \
+    && docker-php-ext-configure zip --with-libzip=/usr/include \
     && docker-php-ext-install pdo pdo_pgsql opcache zip \
     && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu \
     && apk del \
