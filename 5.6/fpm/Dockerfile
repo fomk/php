@@ -20,12 +20,14 @@ RUN set -xe \
         mysql-dev \
         zlib-dev \
     && pecl install apcu-4.0.11 \
-    && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli\
-    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu pdo_mysql mysqli\
+    && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli \
+    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu pdo_mysql mysqli \
     && apk del \
         postgresql-libs \
         libsasl \
         db \
+        zlib-dev \
+        mysql-dev \
         ${PHPIZE_DEPS}
 
 RUN set -xe \
@@ -35,7 +37,7 @@ RUN set -xe \
     && echo "date.timezone=${TZ}" > /usr/local/etc/php/conf.d/timezone.ini \
     && apk del tzdata
 
-RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 
 WORKDIR /var/www/html

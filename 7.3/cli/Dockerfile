@@ -17,17 +17,19 @@ RUN set -xe \
     && apk add --update \
         ${PHPIZE_DEPS} \
         postgresql-dev \
+        mysql-dev \
         libzip-dev \
         libzip \
     && pecl install apcu \
     && docker-php-ext-configure zip --with-libzip=/usr/include \
-    && docker-php-ext-install pdo pdo_pgsql opcache zip \
-    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu \
+    && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli \
+    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu pdo_mysql mysqli \
     && apk del \
         postgresql-libs \
         libsasl \
         db \
         libzip-dev \
+        mysql-dev \
         ${PHPIZE_DEPS}
 
 RUN set -xe \
@@ -36,5 +38,7 @@ RUN set -xe \
     && echo "${TZ}" > /etc/timezone \
     && echo "date.timezone=${TZ}" > /usr/local/etc/php/conf.d/timezone.ini \
     && apk del tzdata
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 CMD ["php", "-a"]

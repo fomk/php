@@ -1,4 +1,4 @@
-FROM php:7.1-cli-alpine
+FROM php:7.4-cli-alpine
 
 ENV TZ Europe/Riga
 
@@ -18,7 +18,8 @@ RUN set -xe \
         ${PHPIZE_DEPS} \
         postgresql-dev \
         mysql-dev \
-        zlib-dev \
+        libzip-dev \
+        libzip \
     && pecl install apcu \
     && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli \
     && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu pdo_mysql mysqli \
@@ -26,7 +27,7 @@ RUN set -xe \
         postgresql-libs \
         libsasl \
         db \
-        zlib-dev \
+        libzip-dev \
         mysql-dev \
         ${PHPIZE_DEPS}
 
