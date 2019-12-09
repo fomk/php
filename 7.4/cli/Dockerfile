@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine
+FROM php:7.4-cli-alpine
 
 ENV TZ Europe/Riga
 
@@ -18,7 +18,9 @@ RUN set -xe \
         ${PHPIZE_DEPS} \
         postgresql-dev \
         mysql-dev \
-        zlib-dev \
+        zlib-dev \ 
+        libzip-dev \
+        libzip \
     && pecl install xdebug apcu \
     && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli \
     && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu xdebug pdo_mysql mysqli \
@@ -27,6 +29,7 @@ RUN set -xe \
         libsasl \
         db \
         zlib-dev \
+        libzip-dev \
         mysql-dev \
         ${PHPIZE_DEPS}
 
@@ -39,8 +42,4 @@ RUN set -xe \
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
-WORKDIR /var/www/html
-
-EXPOSE 9000
-
-CMD ["php-fpm"]
+CMD ["php", "-a"]

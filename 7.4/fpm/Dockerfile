@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 ENV TZ Europe/Riga
 
@@ -19,6 +19,8 @@ RUN set -xe \
         postgresql-dev \
         mysql-dev \
         zlib-dev \
+        libzip-dev \
+        libzip \
     && pecl install xdebug apcu \
     && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli \
     && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu xdebug pdo_mysql mysqli \
@@ -27,6 +29,7 @@ RUN set -xe \
         libsasl \
         db \
         zlib-dev \
+        libzip-dev \
         mysql-dev \
         ${PHPIZE_DEPS}
 
