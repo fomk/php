@@ -21,8 +21,8 @@ RUN set -xe \
         libzip-dev \
         libzip \
     && pecl install apcu \
-    && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli \
-    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu pdo_mysql mysqli \
+    && docker-php-ext-install pdo pdo_pgsql opcache zip pdo_mysql mysqli exif \
+    && docker-php-ext-enable pdo pdo_pgsql opcache zip apcu pdo_mysql mysqli exif \
     && apk del \
         postgresql-libs \
         libsasl \
